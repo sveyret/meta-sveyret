@@ -1,0 +1,49 @@
+This README file contains information on the contents of the Java applications layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: git://git.openembedded.org/meta-openembedded
+  layer: meta-oe
+  branch: mickledore
+
+Table of Contents
+=================
+
+  I. Adding the java-apps layer to your build
+ II. Content
+
+
+I. Adding the java-apps layer to your build
+===========================================
+
+Run 'bitbake-layers add-layer meta-sveyret/meta-java-apps'
+
+II. Content
+===========
+
+temurin-jdk-17-bin
+------------------
+
+The Temurin implementation of the JDK 17. This recipe was taken from a patch at:
+https://lists.openembedded.org/g/openembedded-devel/message/100934
+This provides a java2-runtime.
+
+temurin-jre-17-bin
+------------------
+
+The Temurin implementation of the JRE 17. This recipe was taken from a patch at:
+https://lists.openembedded.org/g/openembedded-devel/message/100934
+This provides a java2-runtime.
+
+minecraft-server
+----------------
+
+A server for Minecraft: Java Edition.
+It will require a java2-runtime. See the Minecraft server pre-requisite to get the minimal version.
+By default, a world named 'world' will be created and started at computer startup. It is possible to set the
+variable 'MINECRAFT_WORLDS' with a space separated list of worlds to create/start, for example, in your
+'local.conf' file.
+Note that the service file is only written for SystemD.

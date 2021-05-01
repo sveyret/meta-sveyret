@@ -1,0 +1,44 @@
+#!/bin/sh
+
+SQUASHFS_DIR="/squash-root"
+
+rootupdate_enabled() {
+	return 0
+}
+
+rootupdate_run() {
+	current_root=${bootparam_rootfile:-rootfs.squashfs}
+	new_root=${bootparam_newrootfile:-*.rootfs*.squashfs*}
+	old_root=${bootparam_oldrootfile:-rootfs-old.squashfs}
+
+	# See if restoration is needed
+	if [ -n "${old_root}" ] && [ -f "${ROOTFS_DIR}/${old_root}" ]; then
+		rm -f "${ROOTFS_DIR}/${current_root}" ${new_root}
+		mv "${ROOTFS_DIR}/${old_root}" "${ROOTFS_DIR}/${current_root}"
+	fi
+
+	# See if root filesystem can be updated
+	c=$(find "${ROOTFS_DIR}" -type f -name ${new_root} -maxdepth 1 -print0 | tr -dc '\0' | wc -c)
+	if [ ${c} -eq 0 ]; then
+		debug "No new root filesystem."
+	elif [ ${c} -gt 1 ]; then
+		msg "More than one file is matching ${new_root}. Ignored."
+	else
+		info "Updating root filesystem."
+		if [ -n "${old_root}" ]; then
+			mv "${ROOTFS_DIR}/${current_root}" "${ROOTFS_DIR}/${old_root}"
+		else
+			rm -f "${ROOTFS_DIR}/${current_root}"
+		fi
+		mv "${ROOTFS_DIR}/"${new_root} "${ROOTFS_DIR}/${current_root}"
+	fi
+
+	# Mount the squash FS
+	mkdir -p "${SQUASHFS_DIR}"
+	mount -n -t squashfs -o loop,ro "${ROOTFS_DIR}/${current_root}" "${SQUASHFS_DIR}" \
+		|| fatal "Could not mount ${current_root} as rootfs"
+	if [ -d "${SQUASHFS_DIR}/boot" ]; then
+		mount -n --move "${ROOTFS_DIR}" "${SQUASHFS_DIR}/boot"
+	fi
+	ROOTFS_DIR="${SQUASHFS_DIR}"
+}

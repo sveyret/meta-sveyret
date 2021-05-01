@@ -1,0 +1,70 @@
+This README file contains information on the contents of the core layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: git://git.openembedded.org/meta-openembedded
+  layer: meta-oe
+  branch: mickledore
+
+Table of Contents
+=================
+
+  I. Adding the core layer to your build
+ II. Content
+
+
+I. Adding the core layer to your build
+======================================
+
+Run 'bitbake-layers add-layer meta-sveyret/meta-core'
+
+II. Content
+===========
+
+efi-stub
+--------
+
+In order to use the EFI_STUB in the kernel without any other bootloader (this will require to configure the
+target so that it can directly load the kernel), one can simply set the following distro configuration entry:
+
+EFI_PROVIDER = "efi-stub"
+
+initramfs-module-rootfs-update
+------------------------------
+
+A module for initramfs-framework which allow update of a running SquashFS-based filesystem.
+With this extension, the SquashFS file will reside in the /boot directory. It is not possible to remove this
+file while the system is running, because it is in use, so the new root filesystem should just be added aside
+the current one, and at next startup, the extension will rename the current filesystem and replace it with the
+new one.
+Before running this module, the primary rootfs is expected to be mounted with partition containing the
+squashfs file(s). That’s why the module has a dependency on 'initramfs-module-rootfs'.
+By default, the rootfs is expected to be called 'rootfs.squashfs'. If it needs to be updated, the new rootfs
+is expected to have a name matching '*.rootfs*.squashfs*'. If updated, the old rootfs will be renamed
+'rootfs-old.squashfs' and should be deleted once the startup is successful. Otherwise, at next startup, the
+new rootfs will be deleted and the previous one restored.
+These names are default values and can be modified using kernel parameters 'rootfile', 'newrootfile' and
+'oldrootfile'.
+Wildcards can be given to 'newrootfile'. If so, at most one file is expected to match the pattern.
+An empty value may be given to 'oldrootfile'. If so, while updating, the previous rootfs will be directly
+deleted and so it will not be possible to restore it.
+
+nfs42-mount
+-----------
+
+This class is to be used if one need a directory mapping a NFS server source. The class is using NFS 4.2, so
+one need to configure the kernel accordingly, and is made for 'systemd' only.
+The usage is as simple as:
+
+NFS_MOUNT_DESCRIPTION = "An optional description"
+NFS_MOUNT_REMOTE = "my.nfs.server:/source/shared/directory"
+NFS_MOUNT_MOUNTPOINT = "/target/directory"
+inherit nfs42-mount
+
+The target directory will be automatically created on the target system.
+
+The recipe will build a '${PN}' package which will mount the directory at startup, and a '${PN}-auto' package
+which will automatically mount the directory only when accessing it.

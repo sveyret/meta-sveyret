@@ -1,0 +1,15 @@
+[Unit]
+Description=Minecraft Server (world: %I)
+After=network.target
+
+[Service]
+User=minecraft
+Group=minecraft
+WorkingDirectory=-@HOME_DIR@/%I
+ExecStartPre=!/bin/mkdir -p @HOME_DIR@/%I
+ExecStartPre=!/bin/chown -R minecraft:minecraft @HOME_DIR@/%I
+ExecStartPre=/bin/sh -c 'echo "eula=true" > @HOME_DIR@/%I/eula.txt'
+ExecStart=@EXEC_PATH@
+
+[Install]
+WantedBy=multi-user.target
