@@ -25,7 +25,7 @@ rootupdate_run() {
 		msg "More than one file is matching ${new_root}. Ignored."
 	else
 		info "Updating root filesystem."
-		if [ -n "${old_root}" ]; then
+		if [ -n "${old_root}" ] && [ -f "${ROOTFS_DIR}/${current_root}" ]; then
 			mv "${ROOTFS_DIR}/${current_root}" "${ROOTFS_DIR}/${old_root}"
 		else
 			rm -f "${ROOTFS_DIR}/${current_root}"
