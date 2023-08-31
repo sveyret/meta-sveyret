@@ -8,8 +8,8 @@ LICENSE_FLAGS = "commercial"
 
 SERVER_FILE_NAME = "server.jar"
 SRC_URI = "\
-    https://piston-data.mojang.com/v1/objects/15c777e2cfe0556eef19aab534b186c0c6f277e1/${SERVER_FILE_NAME};unpack=0;subdir=${BPN}-${PV} \
-    file://systemd.service;subdir=${BPN}-${PV} \
+    https://piston-data.mojang.com/v1/objects/15c777e2cfe0556eef19aab534b186c0c6f277e1/${SERVER_FILE_NAME};unpack=0 \
+    file://systemd.service \
 "
 SRC_URI[md5sum] = "919b1e619aa3c8d08fa5f8c8318563db"
 
@@ -29,7 +29,7 @@ SYSTEMD_SERVICE:${PN} = "${@" ".join(["${BPN}@" + w + ".service" for w in d.getV
 do_install() {
     # JAR file
     install -d -m0755 ${D}/opt/${BPN}
-    install -m 0644 ${S}/${SERVER_FILE_NAME} ${D}/opt/${BPN}/
+    install -m 0644 ${WORKDIR}/${SERVER_FILE_NAME} ${D}/opt/${BPN}/
 
     # Binary
     install -d ${D}${bindir}
@@ -48,6 +48,6 @@ EOF
     sed \
         -e "s,@HOME_DIR@,${localstatedir}/lib/${BPN}," \
         -e "s,@EXEC_PATH@,${bindir}/${BPN}," \
-        ${S}/systemd.service >${D}${systemd_system_unitdir}/${BPN}@.service
+        ${WORKDIR}/systemd.service >${D}${systemd_system_unitdir}/${BPN}@.service
     chmod 644 ${D}${systemd_system_unitdir}/${BPN}@.service
 }
