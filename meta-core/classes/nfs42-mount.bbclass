@@ -18,6 +18,9 @@ python () {
 
 NFS_MOUNT_DESCRIPTION ??= "NFS remote directory"
 
+# Keep empty to wait for all interfaces to be ready
+NFS_WAITING_INTERFACE ?= ""
+
 SYSTEMD_SERVICE:${PN} = "${NFS_MOUNT_NAME}.mount"
 SYSTEMD_SERVICE:${PN}-auto = "${NFS_MOUNT_NAME}.automount"
 
@@ -29,11 +32,14 @@ do_install:append () {
     install -d ${D}${NFS_MOUNT_MOUNTPOINT}
     install -d ${D}${systemd_system_unitdir}
 
+    wait_interface=
+    [ -z "${NFS_WAITING_INTERFACE}" ] || wait_interface="@${NFS_WAITING_INTERFACE}"
+
     cat <<EOF >${D}${systemd_system_unitdir}/${NFS_MOUNT_NAME}.mount
 [Unit]
 Description=Mount ${NFS_MOUNT_DESCRIPTION}
-Requires=systemd-networkd-wait-online.service
-After=systemd-networkd-wait-online.service
+Requires=systemd-networkd-wait-online$wait_interface.service
+After=systemd-networkd-wait-online$wait_interface.service
 
 [Mount]
 What=${NFS_MOUNT_REMOTE}
