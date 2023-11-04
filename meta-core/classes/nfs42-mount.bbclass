@@ -6,6 +6,7 @@ PACKAGES = "${SYSTEMD_PACKAGES} ${PN}-common"
 
 RDEPENDS:${PN} += "${PN}-common"
 RDEPENDS:${PN}-auto += "${PN}-common"
+RDEPENDS:${PN}-common += "nfs-utils-mount"
 
 python () {
     remote = d.getVar("NFS_MOUNT_REMOTE")
