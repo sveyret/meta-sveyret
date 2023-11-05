@@ -39,8 +39,13 @@ do_install:append () {
     cat <<EOF >${D}${systemd_system_unitdir}/${NFS_MOUNT_NAME}.mount
 [Unit]
 Description=Mount ${NFS_MOUNT_DESCRIPTION}
+DefaultDependencies=no
 Requires=systemd-networkd-wait-online$wait_interface.service
 After=systemd-networkd-wait-online$wait_interface.service
+After=remote-fs-pre.target
+Conflicts=umount.target
+Before=umount.target
+Before=remote-fs.target
 
 [Mount]
 What=${NFS_MOUNT_REMOTE}
