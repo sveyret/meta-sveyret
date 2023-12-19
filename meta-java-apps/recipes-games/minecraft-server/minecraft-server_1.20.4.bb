@@ -8,7 +8,7 @@ LICENSE_FLAGS = "commercial"
 
 SERVER_FILE_NAME = "server.jar"
 SRC_URI = "\
-    https://piston-data.mojang.com/v1/objects/15c777e2cfe0556eef19aab534b186c0c6f277e1/${SERVER_FILE_NAME};unpack=0 \
+    https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/${SERVER_FILE_NAME};unpack=0 \
     file://systemd.service \
 "
 SRC_URI[md5sum] = "919b1e619aa3c8d08fa5f8c8318563db"
