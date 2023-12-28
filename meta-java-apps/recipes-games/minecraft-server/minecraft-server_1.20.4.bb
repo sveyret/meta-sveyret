@@ -6,12 +6,12 @@ HOMEPAGE = "https://www.minecraft.net/"
 LICENSE = "CLOSED"
 LICENSE_FLAGS = "commercial"
 
-SERVER_FILE_NAME = "server.jar"
+SERVER_FILE_NAME = "${PN}-${PV}.jar"
 SRC_URI = "\
-    https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/${SERVER_FILE_NAME};unpack=0 \
+    https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar;downloadfilename=${SERVER_FILE_NAME};unpack=0 \
     file://systemd.service \
 "
-SRC_URI[md5sum] = "919b1e619aa3c8d08fa5f8c8318563db"
+SRC_URI[md5sum] = "f57b897c9b81255a518b9e474e5c57d7"
 
 RDEPENDS:${PN} += "java2-runtime"
 
