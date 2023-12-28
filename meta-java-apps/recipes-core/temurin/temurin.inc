@@ -1,6 +1,6 @@
 HOMEPAGE = "https://adoptium.net"
 LICENSE = "GPL-2.0-with-classpath-exception"
-LIC_FILES_CHKSUM = "file://NOTICE;md5=8fa9e85281110769de025562c085b3a4"
+LIC_FILES_CHKSUM = "file://NOTICE;md5=0118abc27c1406bf05d7617cc4db30c9"
 
 COMPATIBLE_HOST = "(aarch64|arm|powerpc64le|x86_64).*-linux"
 # Binaries are linked with glibc
@@ -15,7 +15,7 @@ RPROVIDES:${PN} += "java2-runtime"
 
 # Convert PV to forms needed to download the tarball
 PV_MAJOR = "${@d.getVar('PV').split('.')[0]}"
-PV_UNDER = "${@d.getVar('PV').replace('+', '_')}"
+PV_UNDER = "${@d.getVar('PV').split('+')[0] + '_' + d.getVar('PV').split('+')[1].split('.')[0]}"
 
 SRC_URI = "https://github.com/adoptium/temurin${PV_MAJOR}-binaries/releases/download/jdk-${PV}/OpenJDK${PV_MAJOR}U-${JAVA_TYPE}_${JAVA_ARCH}_linux_hotspot_${PV_UNDER}.tar.gz"
 SRC_URI[sha256sum] = "${JAVA_SHA256}"
