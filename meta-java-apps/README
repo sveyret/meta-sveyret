@@ -24,17 +24,17 @@ Run 'bitbake-layers add-layer meta-sveyret/meta-java-apps'
 II. Content
 ===========
 
-temurin-jdk-17-bin
+temurin-jdk-21-bin
 ------------------
 
-The Temurin implementation of the JDK 17. This recipe was taken from a patch at:
+The Temurin implementation of the JDK 21. This recipe was taken from a patch at:
 https://lists.openembedded.org/g/openembedded-devel/message/100934
 This provides a java2-runtime.
 
-temurin-jre-17-bin
+temurin-jre-21-bin
 ------------------
 
-The Temurin implementation of the JRE 17. This recipe was taken from a patch at:
+The Temurin implementation of the JRE 21. This recipe was taken from a patch at:
 https://lists.openembedded.org/g/openembedded-devel/message/100934
 This provides a java2-runtime.
 

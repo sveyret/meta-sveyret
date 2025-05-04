@@ -7,11 +7,12 @@ SRC_URI = "file://rootupdate"
 
 RDEPENDS:${PN} += "initramfs-module-rootfs"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
 
 do_install() {
     install -d ${D}/init.d
-    install -m 0755 ${WORKDIR}/rootupdate ${D}/init.d/91-rootupdate
+    install -m 0755 ${UNPACKDIR}/rootupdate ${D}/init.d/91-rootupdate
 }
 
 FILES:${PN} = "/init.d/91-rootupdate"
