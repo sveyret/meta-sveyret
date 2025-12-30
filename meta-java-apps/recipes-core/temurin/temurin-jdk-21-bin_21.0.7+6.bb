@@ -5,7 +5,7 @@ JAVA_SHA256:x86-64 = "974d3acef0b7193f541acb61b76e81670890551366625d4f6ca01b91ac
 
 require temurin.inc
 
-S = "${WORKDIR}/jdk-${PV}"
+S = "${UNPACKDIR}/jdk-${PV}"
 
 inherit update-alternatives
 

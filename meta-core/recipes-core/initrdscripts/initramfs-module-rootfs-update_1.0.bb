@@ -7,8 +7,7 @@ SRC_URI = "file://rootupdate"
 
 RDEPENDS:${PN} += "initramfs-module-rootfs"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 do_install() {
     install -d ${D}/init.d
