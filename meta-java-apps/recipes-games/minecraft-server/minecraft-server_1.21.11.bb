@@ -8,10 +8,10 @@ LICENSE_FLAGS = "commercial"
 
 SERVER_FILE_NAME = "${PN}-${PV}.jar"
 SRC_URI = "\
-    https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar;downloadfilename=${SERVER_FILE_NAME};unpack=0 \
+    https://piston-data.mojang.com/v1/objects/64bb6d763bed0a9f1d632ec347938594144943ed/server.jar;downloadfilename=${SERVER_FILE_NAME};unpack=0 \
     file://systemd.service \
 "
-SRC_URI[md5sum] = "a325be7531b7a99c985082908a79d966"
+SRC_URI[sha256sum] = "f83b8e093865806f931c7e34aae41b177d4c076335263dd124c75d6d65dd1726"
 
 RDEPENDS:${PN} += "java2-runtime"
 

@@ -1,11 +1,11 @@
 SUMMARY = "Temurin JDK Binaries"
 
 JAVA_TYPE = "jdk"
-JAVA_SHA256:x86-64 = "974d3acef0b7193f541acb61b76e81670890551366625d4f6ca01b91ac152ce0"
+JAVA_SHA256:x86-64 = "810d3773df7e0d6c4394e4e244b264c8b30e0b05a0acf542d065fd78a6b65c2f"
 
 require temurin.inc
 
-S = "${WORKDIR}/jdk-${PV}"
+S = "${UNPACKDIR}/jdk-${PV}"
 
 inherit update-alternatives
 
